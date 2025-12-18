@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Impressum – Readdit</title>
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main style="max-width: 720px; margin: 4rem auto; padding: 0 1rem;">
+    <h1>Impressum</h1>
+
+    <p>Angaben gemäß § 5 TMG</p>
+
+    <p><strong>Name:</strong><br>Fabian Kummerow</p>
+
+    <p><strong>Adresse:</strong><br>
+      Suttnerstraße 10<br>
+      22765 Hamburg<br>
+      Deutschland
+    </p>
+
+    <p>
+      <strong>E-Mail:</strong><br>
+      <span id="email">[E-Mail wird geladen]</span>
+      <noscript>Bitte JavaScript aktivieren, um die E-Mail-Adresse zu sehen.</noscript>
+    </p>
+
+    <p>
+      Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:<br>
+      Fabian Kummerow
+    </p>
+
+    <p><a href="index.html">Zurück zur Startseite</a></p>
+  </main>
+
+  <script>
+    const user = "mail";
+    const domain = "readdit.de";
+    document.getElementById("email").innerHTML =
+      `<a href="mailto:${user}@${domain}">${user}@${domain}</a>`;
+  </script>
+</body>
+</html>
