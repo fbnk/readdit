@@ -1,0 +1,1433 @@
+header {
+  padding: 1rem 1.25rem 0;
+}
+
+.header-inner {
+  max-width: 47.5rem;      /* an Main angepasst */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;      /* Logo + Suche zentriert */
+}
+
+.logo {
+  height: 120px;
+}
+
+.search-bar {
+  width: 100%;
+  display: flex;
+  gap: 0.75rem;
+}
+
+#suchfeld {
+  flex: 1;
+  color: #0f4c2e;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid #cbd5e1;
+}
+
+button {
+  background-color: #0f4c2e;
+  color: #ffffff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+}
+
+body {
+  background-color: #f5f9ff;
+  color: #333333;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+main {
+  margin: 1rem auto;
+  max-width: 47.5rem;
+  padding: 0;
+  background: none;
+}
+
+/* Immer: Grid-Layout, damit Cards später sauber stehen */
+#results {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+/* Nur wenn Inhalt: Hintergrund, Padding, Radius */
+#results:not(:empty) {
+  background-color: #f2f4f7;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 37.5rem) {
+  #results {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Tablet: zwei Spalten */
+@media (min-width: 37.5rem) { /* 600px */
+  #results {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Klickbare Card mit Inset-Hover */
+.card {
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.15s ease-out, background-color 0.15s ease-out;
+  cursor: pointer; /* Card ist klickbar */
+}
+
+/* Inhalt der Card – Cursor wieder normal */
+.card-inner {
+  padding: 1rem;
+  border-radius: inherit;
+}
+
+.card * {
+  cursor: pointer;
+}
+
+/* Inset-Hover-Effekt */
+.card:hover {
+  box-shadow:
+    inset 0 0 0 1px rgba(15, 76, 46, 0.18),
+    0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
+  background-color: #fdfefe;
+}
+
+.card h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+}
+
+.card .author {
+  margin: 0 0 0.5rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.card .kurztext {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.logo {
+  height: 100px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.loader-wrapper {
+  grid-column: 1 / -1;              /* über alle Spalten spannen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 6rem;                 /* genug Platz */
+}
+
+.loader {
+  width: 2rem;
+  height: 2rem;
+  border: 0.25rem solid rgba(0,0,0,0.1);
+  border-top-color: #0f4c2e;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeIn 0.35s ease-out;
+}
+
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45); /* dunkler Overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  max-width: 32rem;
+  width: 100%;
+  padding: 1.5rem 3rem 1.5rem 1.5rem; /* rechts deutlich mehr Platz */
+  box-shadow: 0 1.5rem 3rem rgba(15, 23, 42, 0.35);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #0f4c2e;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.modal-close:hover {
+  color: #0c3f26;      /* dunkleres Grün */
+  transform: scale(1.25); /* sehr subtiler Zoom */
+}
+
+.modal-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+}
+
+.modal-cover-placeholder {
+  width: 100%;
+  padding-top: 150%; /* 2:3 Ratio */
+  background: #e5e7eb;
+  border-radius: 0.5rem;
+}
+
+.modal-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.modal-author {
+  margin: 0 0 0.5rem;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.modal-description {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.modal-close:focus-visible {
+  outline: none;
+  color: #08311f;
+}
+
+.modal-tabs {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-tab {
+  border: none;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.modal-tab.is-active {
+  background: #0f4c2e;
+  color: #ffffff;
+}
+
+.modal-panel {
+  margin-top: 0.5rem;
+}
+
+.modal-panel[hidden] {
+  display: none;
+}
+
+.modal-voices-empty,
+.fun-facts-empty {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.fun-facts-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+}
+
+.greeting-bar {
+  background: #f2f4f7;
+  color: #0f4c2e;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  max-width: 40rem;          /* schmaler als bisher */
+  width: fit-content;        /* Breite = Inhalt, bis max-width erreicht ist */
+  margin: 1rem auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+.greeting-close {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: #0f4c2e;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.greeting-close:hover {
+  color: #0c3f26;
+  transform: scale(1.15);
+}
+
+.greeting-close:focus-visible {
+  outline: none;
+  color: #08311f;
+}
+
+.greeting-bar.is-hidden {
+  display: none;
+}
+
+/* === Modal-Layout – feste Höhe, nur Inhalt scrollt === */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* äußere Box: immer gleich hoch */
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 900px;
+  width: 90vw;
+
+  /* FIX: feste Höhe, egal wie viel Text im Tab ist */
+  height: 70vh;
+  max-height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Cover links, Inhalt rechts – füllt die ganze Höhe aus */
+.modal-content {
+  display: flex;
+  flex: 1;
+  min-height: 0; /* wichtig für korrektes Flex-Scrolling */
+}
+
+/* linke Spalte (Cover) */
+.modal-cover {
+  width: 30%;
+  min-width: 160px;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+/* rechte Spalte (Tabs + Panels) */
+.modal-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.5rem 2.25rem 1.25;
+  min-width: 0;
+  min-height: 0; /* FIX für korrekte Flex-Höhe */
+}
+
+/* Tabs oben, fixe Höhe */
+.modal-tabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Panel-Bereich nimmt den Rest und scrollt */
+.modal-panel {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 0; 
+}
+
+.voices-heading {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: #334155;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+  padding-bottom: 0.35rem;
+}
+
+.voices-heading span {
+  font-style: italic;
+}
+
+#tab-voices .voices-list {
+  padding-top: 0.7rem;
+}
+
+.voice-item {
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.voice-item:first-child {
+  padding-top: 0;
+}
+
+.voice-item:last-child {
+  border-bottom: none;
+}
+
+.voice-item h4 {
+  margin: 0 0 0.2rem;
+}
+
+.voice-item .meta {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.preferences {
+  margin: 1.25rem auto;
+  max-width: 980px;
+  padding: 1rem;
+  border: 1px solid rgba(148,163,184,0.25);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(6px);
+}
+
+.preferences-title {
+  font-size: 1rem;
+  margin: 0 0 0.75rem;
+  color: #0f172a;
+}
+
+.prefs-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 800px) {
+  .prefs-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.pref {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.75rem;
+  border-radius: 12px;
+  background: rgba(241,245,249,0.7);
+}
+
+.pref-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #0f172a;
+}
+
+.pref-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.pref input[type="range"] {
+  width: 100%;
+}
+
+.pref-value {
+  font-size: 0.75rem;
+  color: #334155;
+  justify-self: end;
+}
+
+.pref-chips {
+  margin-top: 0.9rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  border: 1px solid rgba(148,163,184,0.5);
+  background: transparent;
+  color: #0f172a;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.chip.is-active {
+  background: #0f3d2e;      /* dein Wintergrün */
+  border-color: #0f3d2e;
+  color: white;
+}
+
+.chip:focus-visible {
+  outline: 3px solid rgba(15, 61, 46, 0.35);
+  outline-offset: 2px;
+}
+
+/* =========================
+   🎄 Weihnachtliche Slider
+   ========================= */
+
+:root {
+  --christmas-red: #7a1f1f;
+  --gold: #d4af37;
+  --silver: #cfd3d8;
+  --track: #e5e7eb;
+  --thumb: 14px; /* kleiner! */
+  --track-h: 6px;
+}
+
+/* Base */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ---------- WebKit Track (Chrome/Safari) ---------- */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: var(--track-h);
+  border-radius: 999px;
+  background: var(--track);
+  /* roter Anteil via background-image + background-size */
+  background-image: linear-gradient(var(--christmas-red), var(--christmas-red));
+  background-repeat: no-repeat;
+  background-size: var(--value, 50%) 100%;
+}
+
+/* ---------- WebKit Thumb ---------- */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--thumb);
+  height: var(--thumb);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff6d6, var(--gold));
+  border: 2px solid var(--silver);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  margin-top: calc((var(--track-h) - var(--thumb)) / 2); /* zentrieren */
+}
+
+/* ---------- Firefox Track/Progress ---------- */
+input[type="range"]::-moz-range-track {
+  height: var(--track-h);
+  border-radius: 999px;
+  background: var(--track);
+}
+
+input[type="range"]::-moz-range-progress {
+  height: var(--track-h);
+  border-radius: 999px;
+  background: var(--christmas-red);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: var(--thumb);
+  height: var(--thumb);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff6d6, var(--gold));
+  border: 2px solid var(--silver);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* ---------- Hover / Focus (Glow nur dann) ---------- */
+input[type="range"]:hover::-webkit-slider-thumb,
+input[type="range"]:focus-visible::-webkit-slider-thumb,
+input[type="range"]:hover::-moz-range-thumb,
+input[type="range"]:focus-visible::-moz-range-thumb {
+  box-shadow:
+    0 0 0 4px rgba(212, 175, 55, 0.25),
+    0 2px 6px rgba(0,0,0,0.22);
+}
+
+.recommendations-heading {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(148,163,184,.4);
+  padding-bottom: 0.35rem;
+}
+
+.recommendations-list .card {
+  margin-bottom: 0.6rem;
+}
+
+.overview-facts {
+  margin-top: 0.6rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+.overview-facts strong {
+  color: #334155;
+  font-weight: 600;
+}
+
+/* =========================
+   Tag 17: Fun Facts
+   ========================= */
+
+.funfacts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.funfacts-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  line-height: 1.45;
+}
+
+.funfacts-list li:last-child {
+  border-bottom: none;
+}
+
+.funfacts-list strong {
+  font-weight: 700;
+}
+
+/* Optional: macht Fun Facts “leichter” als Overview */
+#tab-funfacts .funfacts-list li {
+  font-size: 1.02rem;
+}
+
+/* =========================
+   Tag 18: Schnee Overlay
+   ========================= */
+
+.snow-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999; /* über Modal-Backdrop etc. */
+}
+
+.snowflake{
+  position: absolute;
+  top: -20px;
+  border-radius: 50%;
+
+  /* ✅ sichtbar auf hellem Hintergrund */
+  background: rgba(170, 182, 196, 0.85);          /* kühles Grau */
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.55),             /* helle “Kante” */
+    0 2px 6px rgba(15, 23, 42, 0.18);             /* dunkler Schatten */
+  filter: none;
+
+  /* ✅ wirkt natürlicher (optional) */
+  mix-blend-mode: multiply;
+
+  animation-name: snow-fall, snow-sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+
+@keyframes snow-fall {
+  0%   { transform: translateY(-20px); }
+  100% { transform: translateY(110vh); }
+}
+
+@keyframes snow-sway {
+  0%   { margin-left: 0; }
+  50%  { margin-left: 18px; }
+  100% { margin-left: 0; }
+}
+
+/* Toggle UI (floating) */
+.snow-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 10000;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  border-radius: 999px;
+  padding: 10px 12px;
+  backdrop-filter: blur(8px);
+}
+
+.snow-toggle__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.snow-toggle__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.snow-toggle__pill {
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.12);
+  position: relative;
+  transition: background 160ms ease;
+}
+
+.snow-toggle__pill::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: transform 160ms ease;
+}
+
+.snow-toggle__input:checked + .snow-toggle__pill {
+  background: rgba(16, 91, 56, 0.75); /* passend zu deinem Grün */
+}
+
+.snow-toggle__input:checked + .snow-toggle__pill::after {
+  transform: translateX(18px);
+}
+
+.snow-toggle__text {
+  font-weight: 600;
+  color: rgba(0,0,0,0.75);
+}
+
+/* =========================
+   Covers (Modal)
+========================= */
+
+.cover-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.cover-img.is-hidden {
+  display: none;
+}
+
+/* Optional: wenn deine Cover-Box aktuell nur Text hat */
+.modal-cover,
+[data-modal-cover] {
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-cover .cover-img,
+[data-modal-cover] .cover-img {
+  position: absolute;
+  inset: 0;
+}
+
+/* =========================
+   Fun Facts (Tag 17)
+========================= */
+
+.funfacts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.funfacts-list li {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f7f8f7;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.funfacts-list .ff-ico {
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.funfacts-list .ff-text {
+  color: #1b1b1b;
+  line-height: 1.35;
+}
+
+.funfacts-list strong {
+  font-weight: 700;
+}
+
+.funfacts-list .muted {
+  color: rgba(0,0,0,0.55);
+}
+
+/* Überblick-Facts (bleibt elegant, ohne Editions) */
+.overview-facts {
+  margin-top: 18px;
+  color: rgba(0,0,0,0.55);
+  font-weight: 600;
+}
+
+/* =========================
+   Tag 18: Schnee Overlay + Toggle (Switch)
+   ========================= */
+.snow-layer{
+  position: fixed;
+  inset:0;
+  pointer-events:none;
+  z-index: 9999;
+}
+.snowflake{
+  position:absolute;
+  top:-20px;
+  border-radius:50%;
+  background: rgba(255,255,255,0.95);
+  animation-name: snow-fall, snow-sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+@keyframes snow-fall{
+  0%   { transform: translateY(-20px); }
+  100% { transform: translateY(110vh); }
+}
+@keyframes snow-sway{
+  0%   { margin-left: 0; }
+  50%  { margin-left: 22px; }
+  100% { margin-left: 0; }
+}
+
+.snow-toggle{
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 10000;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  border-radius: 999px;
+  padding: 10px 12px;
+  backdrop-filter: blur(8px);
+}
+.snow-toggle__label{
+  display:inline-flex;
+  align-items:center;
+  gap: 10px;
+  cursor:pointer;
+  user-select:none;
+}
+.snow-toggle__input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.snow-toggle__pill{
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.12);
+  position:relative;
+  transition: background 160ms ease;
+}
+.snow-toggle__pill::after{
+  content:"";
+  position:absolute;
+  top:3px; left:3px;
+  width:18px; height:18px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: transform 160ms ease;
+}
+.snow-toggle__input:checked + .snow-toggle__pill{
+  background: rgba(16, 91, 56, 0.75);
+}
+.snow-toggle__input:checked + .snow-toggle__pill::after{
+  transform: translateX(18px);
+}
+.snow-toggle__text{
+  font-weight: 750;
+  color: rgba(0,0,0,0.75);
+}
+
+/* =========================
+   PATCH: Cover im Modal (kein Cropping)
+   ========================= */
+
+/* Container darf bleiben – aber wir machen das Layout “contain-friendly” */
+.modal-cover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: rgba(17, 24, 39, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem; /* ✅ schafft Luft, ohne inset-hacks */
+}
+
+/* Platzhalter soll nicht mit dem Bild konkurrieren */
+.modal-cover-placeholder {
+  width: 100%;
+  height: auto;
+  padding-top: 150%; /* 2:3 Ratio */
+  border-radius: 14px;
+  background: #e5e7eb;
+}
+
+/* ✅ Das ist entscheidend: kein absolute/inset nötig, kein Crop */
+.modal-cover .cover-img {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: calc(100vh - 12rem); /* verhindert übergroße Covers */
+  object-fit: contain !important;  /* ✅ statt cover */
+  object-position: center !important;
+  border-radius: 14px;
+  display: block;
+  background: transparent;
+}
+
+.cover-img.is-hidden { display: none; }
+
+/* Optional: wenn Modal links sehr schmal ist, wirkt contain besser mit etwas mehr Breite */
+@media (min-width: 760px) {
+  .modal-content {
+    grid-template-columns: 1.15fr 1.85fr; /* ✅ Cover bekommt mehr Breite */
+  }
+}
+
+/* =========================
+   PATCH: Schnee (mehr Dichte + Toggle Switch)
+   ========================= */
+.snow-layer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.snowflake{
+  position: absolute;
+  top: -20px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.12));
+  animation-name: snow-fall, snow-sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+
+@keyframes snow-fall{
+  0%   { transform: translateY(-20px); }
+  100% { transform: translateY(110vh); }
+}
+@keyframes snow-sway{
+  0%   { margin-left: 0; }
+  50%  { margin-left: 22px; }
+  100% { margin-left: 0; }
+}
+
+/* Switch unten rechts */
+.snow-toggle{
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 10000;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  border-radius: 999px;
+  padding: 10px 12px;
+  backdrop-filter: blur(8px);
+}
+
+.snow-toggle__label{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.snow-toggle__input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.snow-toggle__pill{
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.12);
+  position: relative;
+  transition: background 160ms ease;
+}
+
+.snow-toggle__pill::after{
+  content:"";
+  position:absolute;
+  top:3px; left:3px;
+  width:18px; height:18px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  transition: transform 160ms ease;
+}
+
+.snow-toggle__input:checked + .snow-toggle__pill{
+  background: rgba(16, 91, 56, 0.75);
+}
+.snow-toggle__input:checked + .snow-toggle__pill::after{
+  transform: translateX(18px);
+}
+
+.snow-toggle__text{
+  font-weight: 700;
+  color: rgba(0,0,0,0.75);
+}
+
+/* =========================
+   Tag 19 PATCH: Fav-Button UI + Merkliste kompakt
+   ========================= */
+
+/* Button sauber oben rechts, kleiner */
+.fav-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(255,255,255,0.92);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* aktiver Zustand bleibt dezent */
+.fav-btn.is-active {
+  border-color: rgba(16, 91, 56, 0.55);
+}
+
+/* Damit Text nicht unter dem Button sitzt */
+.card-inner.has-fav {
+  position: relative;
+  padding-right: 56px;
+}
+
+/* Dein globales .card * { cursor:pointer } überschreibt sonst den Button manchmal ungünstig */
+.card .fav-btn,
+.card .fav-btn * {
+  cursor: pointer !important;
+}
+
+/* Merkliste: Cover klein & kontrolliert */
+.fav-cover {
+  margin-top: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 180px;
+  max-width: 100%;
+  aspect-ratio: 2 / 3;
+  background: #e5e7eb;
+}
+
+.fav-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================
+   Tag 19 PATCH v2: Fav Button wieder "Readdit-grün"
+   ========================= */
+
+.fav-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  border: none;
+  border-radius: 10px;            /* ✅ eckig-abgerundet statt Kreis */
+  background: #0f4c2e;            /* ✅ Tannengrün wie Suchbutton */
+  color: #ffffff;                 /* ✅ Stern sichtbar */
+
+  display: grid;
+  place-items: center;
+
+  font-size: 18px;
+  line-height: 1;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  z-index: 5;                     /* ✅ über Inhalt */
+}
+
+.fav-btn:hover {
+  background: #0c3f26;
+  transform: translateY(-1px);
+}
+
+.fav-btn:focus-visible {
+  outline: 3px solid rgba(15, 76, 46, 0.35);
+  outline-offset: 2px;
+}
+
+/* Active-State: minimal heller oder "gefüllt" bleibt einfach ★ */
+.fav-btn.is-active {
+  background: #0f4c2e;
+}
+
+/* Text soll nicht unter dem Button laufen */
+.card-inner.has-fav {
+  position: relative;
+  padding-right: 64px;
+}
+
+/* Deine globale Regel .card * { cursor:pointer } bleibt,
+   aber wir sichern den Button ab */
+.card .fav-btn,
+.card .fav-btn * {
+  cursor: pointer !important;
+}
+
+/* =========================
+   Cover links in Search-Cards
+   ========================= */
+
+.card-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.card-cover {
+  width: 70px;
+  flex: 0 0 70px;
+  aspect-ratio: 2 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #e5e7eb;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+}
+
+.card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-meta {
+  margin: 0.4rem 0 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* =========================
+   Tag 19 PATCH v3: Merkliste Layout wie Results
+   ========================= */
+
+#favoritesList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+/* Optional: Merkliste Cards etwas kompakter als Suchkarten */
+#favoritesList .card-inner {
+  padding: 1rem;
+}
+
+#favoritesList .fav-cover {
+  width: 180px; /* ✅ bleibt in CSS, nicht im HTML */
+}
+
+/* =========================
+   Tag 20 – Santa Easter Egg (Fly PNG)
+   ========================= */
+
+.santa-egg {
+  position: fixed;
+  top: 14vh;
+  left: 0;
+  z-index: 10001;
+  pointer-events: none;
+
+  /* Start offscreen */
+  transform: translateX(-420px);
+  will-change: transform;
+}
+
+.santa-egg__img{
+  display: block;
+  width: 280px;              /* ggf. 220–340 */
+  height: auto;
+  filter: drop-shadow(0 10px 22px rgba(0,0,0,0.18));
+}
+
+/* Flug: links -> rechts + leicht nach oben, plus "bob" */
+.santa-egg.is-flying {
+  animation:
+    santa-fly 8.0s linear forwards,
+    santa-bob 1.15s ease-in-out infinite;
+}
+
+@keyframes santa-fly {
+  0%   { transform: translateX(-420px) translateY(0) rotate(-2deg); }
+  100% { transform: translateX(calc(100vw + 420px)) translateY(-6vh) rotate(2deg); }
+}
+
+@keyframes santa-bob {
+  0%,100% { margin-top: 0; }
+  50%     { margin-top: 12px; }
+}
+
+/* kleines Toast (optional – bleibt) */
+.santa-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 10002;
+  background: rgba(15, 76, 46, 0.92);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 999px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.20);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: santa-toast-in 2.2s ease forwards;
+}
+
+@keyframes santa-toast-in {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  12%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  85%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+}
+
+@keyframes santa-fly {
+  0%   { transform: translateX(-420px) translateY(0) rotate(-2deg) scale(0.92); }
+  100% { transform: translateX(calc(100vw + 420px)) translateY(-6vh) rotate(2deg) scale(1.06); }
+}
+
+/* 🎁 Gifts */
+.santa-gift {
+  position: fixed;
+  top: -40px;
+  font-size: 22px;
+  pointer-events: none;
+  z-index: 10000;
+  animation: gift-fall 3.2s linear forwards,
+             gift-spin 1.2s ease-in-out infinite;
+  opacity: 0.95;
+}
+
+@keyframes gift-fall {
+  to {
+    transform: translateY(calc(100vh + 60px));
+    opacity: 0;
+  }
+}
+
+@keyframes gift-spin {
+  0%   { rotate: 0deg; }
+  50%  { rotate: 12deg; }
+  100% { rotate: -12deg; }
+}
+
+/* =========================
+   Tag 21 – Mobile Patches (nur Overrides)
+   ========================= */
+
+/* 1) Backdrop auf Mobile mit Randabstand */
+@media (max-width: 600px) {
+  .modal-backdrop {
+    padding: 10px;
+    align-items: stretch; /* Modal darf die Höhe nutzen */
+  }
+}
+
+/* 2) Modal-Box: auf Mobile nicht 70vh fest, sondern flexibel */
+@media (max-width: 600px) {
+  .modal {
+    width: 100%;
+    height: auto;
+    max-height: 92vh;     /* bleibt im Viewport */
+    border-radius: 18px;
+  }
+}
+
+/* 3) Layout: statt links/rechts -> untereinander + wieder hübsche Abstände */
+@media (max-width: 600px) {
+  .modal-content {
+    flex-direction: column; /* Cover oben, Inhalt unten */
+    padding: 16px;          /* Abstand zum Rand wie früher */
+    gap: 14px;              /* Luft zwischen grauem Cover-Kasten & Text */
+    box-sizing: border-box;
+  }
+
+  /* dein Desktop-Padding hier rausnehmen, damit es nicht doppelt wirkt */
+  .modal-body {
+    padding: 0;
+  }
+
+  /* Tabs dürfen umbrechen (keine Quetscherei) */
+  .modal-tabs {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* Touch-Target fürs X */
+  .modal-close {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+  }
+}
+
+/* 4) Cover: auf Mobile kleiner + zentriert + Höhe begrenzt */
+@media (max-width: 600px) {
+  .modal-cover {
+    width: 100%;
+    min-width: 0;
+    max-width: 220px;   /* <<< macht das Cover sichtbar kleiner */
+    margin: 0 auto;     /* <<< zentriert den grauen Kasten */
+    padding: 12px;      /* etwas Luft im Kasten */
+  }
+
+  .modal-cover .cover-img {
+    max-height: 280px;  /* <<< verhindert riesige Cover */
+    height: auto !important;
+  }
+}
+
+/* =========================
+   FIX: Modal-Padding/Content-Breite + unten Luft
+   (ganz ans Ende der CSS)
+   ========================= */
+
+/* 1) Altes .modal-Padding neutralisieren (sonst bleibt 3rem rechts aktiv) */
+.modal {
+  padding: 0;            /* <- killt das frühe padding: 1.5rem 3rem ... */
+  box-sizing: border-box;
+}
+
+/* 2) Textbereich darf wirklich bis “rechts” gehen */
+.modal-body {
+  padding-right: 1.25rem;   /* etwas Luft rechts, aber nicht zu viel */
+  padding-left: 1.25rem;    /* symmetrisch */
+  padding-bottom: 2.25rem;  /* ✅ mehr Luft unten (dein Wunsch) */
+}
+
+/* 3) Panel: unten extra Luft, damit Text nicht “an den Rand klebt” */
+.modal-panel {
+  padding-bottom: 1.25rem;
+}
+
+/* 4) Mobile: dein Layout bleibt, aber jetzt greift es wirklich */
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 16px;   /* du hattest das schon – jetzt wirkt es auch */
+  }
+
+  .modal-body {
+    padding: 0 0 1.5rem; /* nur unten Luft, Seiten kommen vom modal-content */
+  }
+
+  .modal-panel {
+    padding-bottom: 1.25rem;
+  }
+}
+

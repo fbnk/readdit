@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Readdit</title>
+  <meta property="og:title" content="Readdit – Bücher entdecken mit Community-Signalen">
+  <meta property="og:description" content="Finde Bücher mit Open Library, Reddit & deiner persönlichen Lesestimmung.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.png" type="image/png">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <img src="logo.png" alt="Readdit" class="logo">
+
+      <!-- ✅ WICHTIG: Form = Enter + Button tap funktioniert mobile zuverlässig -->
+      <form id="searchForm" class="search-bar" autocomplete="off">
+        <input
+          id="suchfeld"
+          type="search"
+          placeholder="Buchtitel suchen…"
+          enterkeyhint="search"
+        >
+        <button id="searchBtn" type="submit">Suche</button>
+      </form>
+    </div>
+  </header>
+
+  <div class="greeting-bar">
+    <span class="greeting-text">
+      Willkommen bei Readdit, deiner Buch-Suchmaschine. Ho, ho, ho.
+    </span>
+    <button
+      class="greeting-close"
+      type="button"
+      aria-label="Hinweis schließen"
+    >
+      ×
+    </button>
+  </div>
+
+  <main>
+    <!-- Tag 16: Preferences -->
+    <section id="preferences" class="preferences">
+      <h2 class="preferences-title">Deine Lese-Stimmung</h2>
+
+      <div class="prefs-grid">
+        <label class="pref">
+          <span class="pref-label">Schreibstil</span>
+          <span class="pref-scale"><span>ruhig</span><span>direkt</span></span>
+          <input id="pref-style" type="range" min="0" max="100" value="50" />
+          <span class="pref-value" data-pref-value="style">50</span>
+        </label>
+
+        <label class="pref">
+          <span class="pref-label">Erzähltempo</span>
+          <span class="pref-scale"><span>gemütlich</span><span>rasant</span></span>
+          <input id="pref-pace" type="range" min="0" max="100" value="50" />
+          <span class="pref-value" data-pref-value="pace">50</span>
+        </label>
+
+        <label class="pref">
+          <span class="pref-label">Komplexität</span>
+          <span class="pref-scale"><span>leicht</span><span>vielschichtig</span></span>
+          <input id="pref-complexity" type="range" min="0" max="100" value="50" />
+          <span class="pref-value" data-pref-value="complexity">50</span>
+        </label>
+      </div>
+
+      <div class="pref-chips">
+        <p class="pref-label">Genres (mehrfach)</p>
+        <div class="chips" role="group" aria-label="Genre-Auswahl">
+          <button type="button" class="chip" data-genre="fantasy">Fantasy</button>
+          <button type="button" class="chip" data-genre="scifi">Sci-Fi</button>
+          <button type="button" class="chip" data-genre="mystery">Mystery</button>
+          <button type="button" class="chip" data-genre="romance">Romance</button>
+          <button type="button" class="chip" data-genre="nonfiction">Sachbuch</button>
+          <button type="button" class="chip" data-genre="classics">Klassiker</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Suche-Ergebnisse -->
+    <section id="results"></section>
+
+    <!-- Favoriten / Merkliste (Tag 19) -->
+    <section id="favorites" class="favorites">
+      <h2 class="favorites-title">Merkliste</h2>
+      <div id="favoritesList" class="favorites-list"></div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" data-modal-backdrop hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Buchdetails">
+
+      <button
+        class="modal-close"
+        type="button"
+        data-modal-close
+        aria-label="Details schließen"
+      >
+        ×
+      </button>
+
+      <div class="modal-content">
+        <div class="modal-cover">
+          <div class="modal-cover-placeholder">Kein Cover</div>
+        </div>
+
+        <div class="modal-body">
+
+          <!-- Tabs -->
+          <div class="modal-tabs" role="tablist" aria-label="Buchdetails">
+            <button
+              id="tabbtn-overview"
+              class="modal-tab is-active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="tab-overview"
+              data-tab="overview"
+            >
+              Überblick
+            </button>
+
+            <button
+              id="tabbtn-voices"
+              class="modal-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="tab-voices"
+              data-tab="voices"
+            >
+              Stimmen
+            </button>
+
+            <button
+              id="tabbtn-recommendations"
+              class="modal-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="tab-recommendations"
+              data-tab="recommendations"
+            >
+              Empfehlungen
+            </button>
+
+            <button
+              id="tabbtn-facts"
+              class="modal-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="tab-facts"
+              data-tab="facts"
+            >
+              Fun Facts
+            </button>
+          </div>
+
+          <!-- Überblick -->
+          <div
+            id="tab-overview"
+            class="modal-panel"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabbtn-overview"
+          >
+            <h2 class="modal-title"></h2>
+            <p class="modal-author"></p>
+            <p class="modal-description"></p>
+          </div>
+
+          <!-- Stimmen -->
+          <div
+            id="tab-voices"
+            class="modal-panel"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabbtn-voices"
+            hidden
+          >
+            <h3 class="voices-heading">
+              Top 5 Reddit-Stimmen zu „<span id="voices-title"></span>“
+            </h3>
+            <div id="voices-list" class="voices-list"></div>
+          </div>
+
+          <!-- Empfehlungen -->
+          <div
+            id="tab-recommendations"
+            class="modal-panel"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabbtn-recommendations"
+            hidden
+          >
+            <h3 class="recommendations-heading">
+              Top 3 Empfehlungen zu „<span id="recs-title"></span>“
+            </h3>
+            <div id="recommendations-list" class="recommendations-list"></div>
+          </div>
+
+          <!-- Fun Facts -->
+          <div
+            id="tab-facts"
+            class="modal-panel"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="tabbtn-facts"
+            hidden
+          >
+            <h3 id="funfacts-title"></h3>
+            <div id="funfacts-list"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>made with curiosity</footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
