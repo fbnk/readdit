@@ -515,11 +515,6 @@ function renderOverviewFromWork(meta, work) {
       ${facts.length ? `<p class="overview-facts">${facts.join(" · ")}</p>` : ""}
     </div>
   `;
-
-  // Hinweis “spricht wohl EN” (nur in Overview als dezenter Tag)
-  if (looksEnglish(desc)) {
-    modalDescriptionEl.innerHTML += `<p class="overview-langhint">Hinweis: Beschreibung wirkt aktuell eher <strong>Englisch</strong>.</p>`;
-  }
 }
 
 async function loadOverviewDetails(meta) {
@@ -1283,13 +1278,6 @@ async function loadFunFacts(meta, work) {
     facts.push({
       icon: "🌍",
       html: `Sprachen der Editionen sind gerade nicht abrufbar (Open Library zickt manchmal).`
-    });
-  }
-
-  if (descLangHint === "EN") {
-    facts.push({
-      icon: "🗣️",
-      html: `Die Beschreibung wirkt aktuell eher <strong>Englisch</strong> (nur Hinweis – wir übersetzen noch nicht).`
     });
   }
 
